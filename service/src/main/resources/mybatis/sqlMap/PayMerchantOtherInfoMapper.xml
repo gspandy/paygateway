@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMerchantOtherInfoMapper">
+  <resultMap id="BaseResultMap" type="PayMerchantOtherInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="citic_industry_category" jdbcType="VARCHAR" property="citicIndustryCategory" />
+    <result column="industrial_industry_category" jdbcType="VARCHAR" property="industrialIndustryCategory" />
+    <result column="merchant_type" jdbcType="TINYINT" property="merchantType" />
+    <result column="citic_canal_flag" jdbcType="VARCHAR" property="citicCanalFlag" />
+    <result column="industrial_min_amt" jdbcType="DECIMAL" property="industrialMinAmt" />
+    <result column="industrial_max_amt" jdbcType="DECIMAL" property="industrialMaxAmt" />
+    <result column="industrial_canal_flag" jdbcType="VARCHAR" property="industrialCanalFlag" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+</mapper>

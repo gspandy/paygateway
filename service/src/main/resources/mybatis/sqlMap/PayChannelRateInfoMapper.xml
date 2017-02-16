@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayChannelRateInfoMapper">
+    <resultMap id="BaseResultMap" type="PayChannelRateInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="channel_rate_name" jdbcType="VARCHAR" property="channelRateName"/>
+        <result column="channel_no" jdbcType="VARCHAR" property="channelNo"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="pay_type_code" jdbcType="VARCHAR" property="payTypeCode"/>
+        <result column="pay_type_name" jdbcType="VARCHAR" property="payTypeName"/>
+        <result column="channel_rate" jdbcType="DECIMAL" property="channelRate"/>
+        <result column="pay_source" jdbcType="TINYINT" property="paySource"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+    </resultMap>
+    <sql id="baseColumn">
+    id,channel_rate_name,channel_no,channel_name,pay_type_code,pay_type_name,channel_rate,
+    pay_source,create_at,update_at
+  </sql>
+    <select id="findByChannelNameAndPayTypeCode" parameterType="java.util.HashMap" resultType="PayChannelRateInfo">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM pay_channel_rate_info WHERE 1 = 1
+        <if test="channelNo != null and '' != channelNo">
+            <![CDATA[
+     	and channel_no = #{channelNo,jdbcType=VARCHAR}
+     	]]>
+        </if>
+        <if test="channelName != null and '' != channelName">
+            <![CDATA[
+       and channel_name = #{channelName,jdbcType=VARCHAR}
+       ]]>
+        </if>
+        <if test="payTypeCode!= null and '' != payTypeCode">
+            <![CDATA[
+       and pay_type_code = #{payTypeCode,jdbcType=VARCHAR}
+       ]]>
+        </if>
+        <if test="payTypeName != null and '' != payTypeName">
+            <![CDATA[
+       and pay_type_name = #{payTypeName,jdbcType=VARCHAR}
+       ]]>
+        </if>
+        <if test="paySource != null and '' != paySource">
+            <![CDATA[
+       and pay_source = #{paySource,jdbcType=TINYINT}
+       ]]>
+        </if>
+    </select>
+</mapper>

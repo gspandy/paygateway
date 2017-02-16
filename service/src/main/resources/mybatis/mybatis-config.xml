@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings> 
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->   
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" />
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+
+	<typeAliases>
+		<!-- 获取paygateway项目中的XML实体 -->
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayChannelBaseInfo"  alias="PayChannelBaseInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayChannelMaterialInfo"  alias="PayChannelMaterialInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayChannelRateInfo"  alias="PayChannelRateInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMaterialBaseInfo"  alias="PayMaterialBaseInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantBaseInfo"  alias="PayMerchantBaseInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantChannelInfo"  alias="PayMerchantChannelInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantLog"  alias="PayMerchantLog"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantOtherInfo"  alias="PayMerchantOtherInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantPicInfo"  alias="PayMerchantPicInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayMerchantSettleInfo"  alias="PayMerchantSettleInfo"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayOrder"  alias="PayOrder"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PaySubCanal"  alias="PaySubCanal"/>
+		<typeAlias type="com.qiyu.paygateway.domain.entity.PayUser"  alias="PayUser"/>
+
+		<!--		<typeAlias type="com.qiyu.data.util.PageData" alias="pd"/>
+                &lt;!&ndash; 分页 &ndash;&gt;
+                <typeAlias type="com.qiyu.data.entity.Page" alias="Page"/>-->
+		<typeAlias type="java.util.HashMap"  alias="HashMap"/>
+	</typeAliases>
+	<!---->
+	<!--<plugins>-->
+		<!--<plugin interceptor="com.qiyu.data.plugin.PagePlugin">-->
+			<!--<property name="dialect" value="mysql"/>-->
+			<!--<property name="pageSqlId" value=".*listPage.*"/>-->
+		<!--</plugin>-->
+	<!--</plugins>-->
+	
+</configuration>

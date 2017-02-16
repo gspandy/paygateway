@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/data/logs/qiyu/paygateway/paygateway.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>/data/logs/qiyu/paygateway/paygateway.%d{yyyyMMdd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+
+    <logger name="com.qiyu.paygateway" level="INFO">
+        <appender-ref ref="rollingFile"/>
+    </logger>
+
+    <logger  name ="org.hibernate.type.descriptor.sql.BasicBinder"  level = "TRACE" />
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="INFO"/>-->
+
+    <logger name="org.apache.ibatis" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="java.sql" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.alibaba.dubbo" additivity="false">
+        <priority value ="info"/>
+        <appender-ref ref="console" />
+    </logger>
+
+
+</configuration>

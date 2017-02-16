@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMerchantSettleInfoMapper">
+  <resultMap id="BaseResultMap" type="PayMerchantSettleInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="merchant_id" jdbcType="BIGINT" property="merchantId" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="account_no" jdbcType="VARCHAR" property="accountNo" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
+    <result column="certificate_type" jdbcType="TINYINT" property="certificateType" />
+    <result column="certificate_no" jdbcType="VARCHAR" property="certificateNo" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+</mapper>

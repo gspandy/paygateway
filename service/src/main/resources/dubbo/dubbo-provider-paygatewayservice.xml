@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://code.alibabatech.com/schema/dubbo 
+			http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- application 全局唯一 -->
+	<dubbo:application id="paygatewayserviceApplication"
+					   name="${paygatewayservice.dubbo.application.name}"
+					   owner="${paygatewayservice.dubbo.application.owner}"
+					   organization="${paygatewayservice.dubbo.application.organization}"/>
+
+	<!-- dubbo协议 -->
+	<dubbo:protocol id="paygatewayserviceProtocol"
+					name="${paygatewayservice.dubbo.protocol.name}"
+					port="${paygatewayservice.dubbo.protocol.port}"/>
+
+	<!-- 注册中心 -->
+	<dubbo:registry id="paygatewayserviceRegistry"
+					client="${paygatewayservice.dubbo.registry.client}"
+					protocol="${paygatewayservice.dubbo.registry.protocol}"
+					address="${paygatewayservice.dubbo.registry.address}"
+					file="/data/dubbo/paygatewayservice/paygatewayservice-dubbo-registry.properties"/>
+
+
+	<!--支付提供服务-->
+	<dubbo:provider id="paygatewayProvider"
+					application="paygatewayserviceApplication"
+					protocol="paygatewayserviceProtocol"
+					registry="paygatewayserviceRegistry"
+					timeout="${paygatewayservice.dubbo.provide.timeout}"
+					retries="${paygatewayservice.dubbo.provide.retries}"
+					loadbalance="${paygatewayservice.dubbo.provide.loadbalance}"
+					cluster="${paygatewayservice.dubbo.provide.cluster}"
+					group="${paygatewayservice.dubbo.provide.group}"
+					version="${paygatewayservice.dubbo.provide.version}"
+					delay="-1"/>
+	<dubbo:service interface="com.qiyu.paygateway.service.IPayGateWayService" ref="payGateWayService" provider="paygatewayProvider"/>
+</beans>

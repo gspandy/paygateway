@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PaySubCanalMapper">
+  <resultMap id="BaseResultMap" type="PaySubCanal">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="canal_name" jdbcType="VARCHAR" property="canalName" />
+    <result column="canal_no" jdbcType="VARCHAR" property="canalNo" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, canal_name as canalName, canal_no as canalNo, create_at as createAt, update_at as updateAt
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from pay_sub_canal
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

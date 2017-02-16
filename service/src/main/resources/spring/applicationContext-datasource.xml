@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="parentDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${master.paygateway.jdbc.driverClassName}"/>
+		<property name="url" value="${master.paygateway.jdbc.url}" />
+		<property name="username" value="${master.paygateway.jdbc.username}" />
+		<property name="password" value="${master.paygateway.jdbc.password}" />
+		<property name="initialSize" value="${paygateway.db.minConnection}"/>
+		<property name="minIdle" value="${paygateway.db.minConnection}"/>
+		<property name="maxActive" value="${paygateway.db.maxConnection}"/>
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000"/>
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000"/>
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"/>
+		<property name="validationQuery" value="${paygateway.db.validationQuery}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="testOnBorrow" value="false"/>
+		<property name="testOnReturn" value="false"/>
+		<!-- 打开removeAbandoned功能 超过10分钟未关闭，就会被强行回收，并且日志记录连接申请时的调用堆栈 -->
+		<property name="removeAbandoned" value="true"/>
+		<property name="removeAbandonedTimeout" value="600"/>
+		<property name="logAbandoned" value="true"/>
+	</bean>
+	<!-- 主数据源-->
+	<bean id="masterDataSource" parent="parentDataSource">
+		<property name="driverClassName" value="${master.paygateway.jdbc.driverClassName}" />
+		<property name="url" value="${master.paygateway.jdbc.url}" />
+		<property name="username" value="${master.paygateway.jdbc.username}" />
+		<property name="password" value="${master.paygateway.jdbc.password}" />
+	</bean>
+	<!-- 从数据源-->
+	<bean id="slaveDataSource" parent="parentDataSource">
+		<property name="driverClassName" value="${slave.paygateway.jdbc.driverClassName}" />
+		<property name="url" value="${slave.paygateway.jdbc.url}" />
+		<property name="username" value="${slave.paygateway.jdbc.username}" />
+		<property name="password" value="${slave.paygateway.jdbc.password}" />
+	</bean>
+
+	<!--<bean id="dataSource" class="com.qiyu.paygateway.aop.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="slave" value-ref="slaveDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="masterDataSource" />
+	</bean>
+
+	&lt;!&ndash; 切换数据源 &ndash;&gt;
+	<bean id="dataSourceAdvice" class="com.qiyu.paygateway.aop.DataSourceAdvice"/>
+	<aop:config>
+		<aop:advisor
+				pointcut="execution(* com.qiyu.paygateway.dao.*Dao.*(..))"
+				advice-ref="dataSourceAdvice"/>
+	</aop:config>-->
+
+	<!-- 配置mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="parentDataSource"/>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+		<!-- mapper扫描 -->
+		<property name="mapperLocations" value="classpath*:mybatis/*/*.xml"></property>
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="parentDataSource" />
+		<qualifier value="insurance" />
+	</bean>
+
+	<!-- 全注解方式 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

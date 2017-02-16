@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMaterialBaseInfoMapper">
+  <resultMap id="BaseResultMap" type="PayMaterialBaseInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="material_name" jdbcType="VARCHAR" property="materialName" />
+    <result column="material_order" jdbcType="TINYINT" property="materialOrder" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+</mapper>

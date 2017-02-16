@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMerchantChannelInfoMapper">
+    <resultMap id="BaseResultMap" type="PayMerchantChannelInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="merchant_id" jdbcType="BIGINT" property="merchantId"/>
+        <result column="withdraw_cash_rate" jdbcType="DECIMAL" property="withdrawCashRate"/>
+        <result column="channel_no" jdbcType="VARCHAR" property="channelNo"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="channel_merchant_no" jdbcType="VARCHAR" property="channelMerchantNo"/>
+        <result column="merchant_key" jdbcType="VARCHAR" property="merchantKey"/>
+        <result column="settle_type" jdbcType="TINYINT" property="settleType"/>
+        <result column="is_opened" jdbcType="TINYINT" property="isOpened"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+    </resultMap>
+    <sql id="baseColumn">
+  id,merchant_id as merchantId,withdraw_cash_rate as withdrawCashRate,channel_no as channelNo ,channel_name as channelName,channel_merchant_no as channelMerchantNo,merchant_key as merchantKey,settle_type as settleType ,is_opened as isOpened,status,create_at as createAt,update_at as updateAt
+
+  </sql>
+
+    <select id="findPayMerchantId" resultType="PayMerchantChannelInfo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM
+        pay_merchant_channel_info
+        WHERE
+        1 = 1
+        <!-- <if test="merchantId != null">-->
+        AND merchant_id = #{merchantId}
+        <!--   </if>-->
+        AND is_opened = 1
+        AND status = 1
+    </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayOrderMapper">
+    <resultMap id="BaseResultMap" type="PayOrder">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="merchant_id" jdbcType="BIGINT" property="merchantId"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="trade_no" jdbcType="VARCHAR" property="tradeNo"/>
+        <result column="order_amt" jdbcType="DECIMAL" property="orderAmt"/>
+        <result column="fee_amt" jdbcType="DECIMAL" property="feeAmt"/>
+        <result column="fee_rate" jdbcType="DECIMAL" property="feeRate"/>
+        <result column="payer_name" jdbcType="VARCHAR" property="payerName"/>
+        <result column="payer_id" jdbcType="VARCHAR" property="payerId"/>
+        <result column="receiver_id" jdbcType="BIGINT" property="receiverId"/>
+        <result column="channel_no" jdbcType="VARCHAR" property="channelNo"/>
+        <result column="canal_id" jdbcType="BIGINT" property="canalId"/>
+        <result column="callback_url" jdbcType="VARCHAR" property="callBackUrl"/>
+        <result column="pay_type" jdbcType="TINYINT" property="payType"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="error_msg" jdbcType="VARCHAR" property="errorMsg"/>
+        <result column="trade_time" jdbcType="TIMESTAMP" property="tradeTime"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+    </resultMap>
+    <sql id="baseColumn">
+    id,merchant_id as merchantId ,order_no as orderNo,trade_no as tradeNo,order_amt as orderAmt,fee_amt as feeAmt,fee_rate as feeRate,payer_name as payerName,payer_id as payerId,receiver_id as receiverId,channel_no as channelNo,canal_id as canalId,callback_url as callBackUrl,
+    pay_type as payType,status,error_msg as errorMsg,trade_time as tradeTime,create_at as createAt ,update_at as updateAt
+
+  </sql>
+    <select id="findByOrderNo" resultType="PayOrder" parameterType="java.lang.String">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM
+        pay_order where 1= 1
+            AND order_no = #{orderNo}
+    </select>
+    <insert id="insertPayOrder" parameterType="PayOrder">
+    INSERT INTO pay_order(
+        merchant_id,
+        order_no,
+        trade_no,
+        order_amt,
+        fee_amt,
+        fee_rate,
+        payer_name,
+        payer_id,
+        receiver_id,
+        channel_no,
+        canal_id,
+        pay_type,
+        status,
+        error_msg,
+        trade_time,
+        create_at,
+        update_at)VALUES (
+        #{merchantId},
+        #{orderNo},
+        #{tradeNo},
+        #{orderAmt},
+        #{feeAmt},
+        #{feeRate},
+        #{payerName},
+        #{payerId},
+        #{receiverId},
+        #{channelNo},
+        #{canalId},
+        #{payType},
+        #{status},
+        #{errorMsg},
+        #{tradeTime},
+        NOW(),
+        NOW()
+        )
+  </insert>
+    <update id="updatePayOrder" parameterType="PayOrder">
+        UPDATE pay_order
+        <set>
+            <if test="merchantId != null">
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNo != null">
+                trade_no = #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAmt != null">
+                order_amt= #{orderAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="feeAmt != null">
+                fee_amt= #{feeAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="feeRate != null">
+                fee_rate= #{feeRate,jdbcType=DECIMAL},
+            </if>
+            <if test="payerName != null">
+                payer_name= #{payerName,jdbcType=VARCHAR},
+            </if>
+            <if test="payerId != null">
+                payer_id= #{payerId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverId != null">
+                receiver_id= #{receiverId,jdbcType=BIGINT},
+            </if>
+            <if test="channelNo != null">
+                channel_no= #{channelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="canalId != null">
+                canal_id= #{canalId,jdbcType=BIGINT},
+            </if>
+            <if test="payType != null">
+                pay_type= #{payType,jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                status= #{status,jdbcType=TINYINT},
+            </if>
+            <if test="errorMsg != null">
+                error_msg= #{errorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeTime != null">
+                trade_time= #{tradeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                update_at= NOW()
+            </if>
+        </set>
+          where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

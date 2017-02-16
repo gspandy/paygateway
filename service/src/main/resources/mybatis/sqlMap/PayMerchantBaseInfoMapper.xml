@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMerchantBaseInfoMapper">
+    <resultMap id="BaseResultMap" type="PayMerchantBaseInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="canal_id" jdbcType="BIGINT" property="canalId"/>
+        <result column="merchant_no" jdbcType="VARCHAR" property="merchantNo"/>
+        <result column="merchant_name" jdbcType="VARCHAR" property="merchantName"/>
+        <result column="merchant_short_name" jdbcType="VARCHAR" property="merchantShortName"/>
+        <result column="leader_name" jdbcType="VARCHAR" property="leaderName"/>
+        <result column="leader_phone" jdbcType="VARCHAR" property="leaderPhone"/>
+        <result column="merchant_type" jdbcType="TINYINT" property="merchantType"/>
+        <result column="service_phone" jdbcType="VARCHAR" property="servicePhone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="business_entity" jdbcType="TINYINT" property="businessEntity"/>
+        <result column="wechat_category" jdbcType="VARCHAR" property="wechatCategory"/>
+        <result column="wechat_merchant_id" jdbcType="VARCHAR" property="wechatMerchantId"/>
+        <result column="alipay_category" jdbcType="VARCHAR" property="alipayCategory"/>
+        <result column="alipay_pid" jdbcType="VARCHAR" property="alipayPid"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+    </resultMap>
+    <sql id="baseColumn">
+    id,canal_id as canalId,merchant_no as merchantNo ,merchant_name as merchantName,merchant_short_name as merchantShortName,leader_name as leaderName,leader_phone as leaderPhone,merchant_type as merchantType,service_phone as servicePhone,
+email,province,city,address,business_entity as businessEntity,wechat_category as wechatCategory,wechat_merchant_id as wechatMerchantId,alipay_category as alipayCategory,alipay_pid as alipayPid ,create_at as createAt,update_at as updateAt
+  </sql>
+    <select id="findByMerchantNo" resultType="PayMerchantBaseInfo" >
+        SELECT
+        <include refid="baseColumn"/>
+        FROM
+        pay_merchant_base_info WHERE 1 =1
+      <!--  <if test=" #{merchantNo}!=null">-->
+            AND merchant_no = #{merchantNo,jdbcType=VARCHAR}
+     <!--   </if>-->
+    </select>
+    <select id="findById" resultType="PayMerchantBaseInfo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM
+        pay_merchant_base_info
+          WHERE id = #{id}
+    </select>
+</mapper>

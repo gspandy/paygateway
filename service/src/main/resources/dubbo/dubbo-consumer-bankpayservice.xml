@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://code.alibabatech.com/schema/dubbo
+              http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <!-- application 全局唯一 -->
+    <dubbo:application id="bankpayserviceApplication"
+                       name="${bankpayservice.dubbo.application.name}"
+                       owner="${bankpayservice.dubbo.application.owner}"
+                       organization="${bankpayservice.dubbo.application.organization}"/>
+
+    <!-- dubbo协议 -->
+    <dubbo:protocol id="bankpayserviceProtocol"
+                    name="${bankpayservice.dubbo.protocol.name}"
+                    port="${bankpayservice.dubbo.protocol.port}"/>
+
+    <!-- 注册中心 -->
+    <dubbo:registry id="bankpayserviceRegistry"
+                    client="${bankpayservice.dubbo.registry.client}"
+                    protocol="${bankpayservice.dubbo.registry.protocol}"
+                    address="${bankpayservice.dubbo.registry.address}"
+                    file="/data/dubbo/bankpayservice/bankpayservice-dubbo-registry.properties"/>
+
+
+    <dubbo:consumer id="bankpayserviceConsumer"
+                    application="bankpayserviceApplication"
+                    registry="bankpayserviceRegistry"
+                    check="${bankpayservice.dubbo.consumer.check}"
+                    retries="${bankpayservice.dubbo.consumer.retries}"
+                    group="${bankpayservice.dubbo.consumer.group}"
+                    version="${bankpayservice.dubbo.consumer.version}"/>
+
+
+    <dubbo:reference id="cmbcPayService" interface="com.qiyu.bankpay.service.CMBCPayService"
+                     consumer="bankpayserviceConsumer"/>
+
+    <dubbo:reference id="ctticPayService" interface="com.qiyu.bankpay.service.CTTICPayService"
+                     consumer="bankpayserviceConsumer"/>
+
+    <dubbo:reference id="industrialPayService" interface="com.qiyu.bankpay.service.IndustrialPayService"
+                     consumer="bankpayserviceConsumer"/>
+
+    <dubbo:reference id="kftPayService" interface="com.qiyu.bankpay.service.KFTPayService"
+                     consumer="bankpayserviceConsumer"/>
+
+</beans>
